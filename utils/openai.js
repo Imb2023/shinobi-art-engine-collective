@@ -46,7 +46,7 @@ const askGPT = async (item) => {
         content: collectionBackground + "\n\n" + JSON.stringify(item.attributes)
       }
     ],
-    model: 'gpt-4',
+    model: 'gpt-4o-mini',
   });
 
   // This "should" produce valid json... Luckily we have resume.

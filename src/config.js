@@ -192,7 +192,6 @@ export {
   network,
   bchMetadata,
   bcmrMetadata,
-  solanaMetadata,
   gif,
   preview_gif,
   collectionName,

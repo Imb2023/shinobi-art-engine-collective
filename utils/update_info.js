@@ -11,7 +11,6 @@ import {
   description,
   namePrefix,
   network,
-  solanaMetadata,
   iconFormat,
 } from '../src/config.js';
 
@@ -41,16 +40,7 @@ const updateInfo = () => {
 
   console.log(`Updated namePrefix ===> ${namePrefix}`);
   console.log(`Updated description ===> ${description}`);
-  if (network == NETWORK.sol) {
-    console.log(
-      `Updated creators to ===> ${JSON.stringify(
-        solanaMetadata.creators
-      )}`
-    );
-  } else {
-    console.log(`Updated baseUri ===> ${baseUri}`);
-    console.log(`Updated baseIconUri ===> ${baseIconUri}`);
-  }
+  
 };
 
 // Update info.

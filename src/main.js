@@ -16,7 +16,6 @@ import {
   network,
   bchMetadata,
   bcmrMetadata,
-  solanaMetadata,
   gif,
   collectionName,
   collectionDescription,
