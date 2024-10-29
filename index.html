@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+  <title>Proof of Purchase</title>
+</head>
+<body>
+  <h1>CALL CORNELL JONNES BASBACK</h1>
+  <div class="wrapper">
+    <div class="profile">
+      <table id="userdata">
+        <thead>
+          <tr>
+            <th>Trait Type</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    </div>
+  <img src="/build/preview.gif" alt="failed" />
+  <img src="/build/preview.png" alt="/build/preview.png" />
+  <img src="/build/icons/3.png" alt="/build/icons/3.png" />
+  <img src="/build/images/3.png" alt="PNG" />
+  <script>
+    $(function() {
+      // Load JSON data
+      $.getJSON("/build/json/3.json", function(data) {
+        // Iterate over each attribute in the "attributes" array
+        $.each(data.attributes, function(i, attribute) {
+          // Construct a table row with trait_type and value
+          var tblRow = "<tr>" + 
+                          "<td>" + attribute.trait_type + "</td>" +
+                          "<td>" + attribute.value + "</td>" +
+                       "</tr>";
+          // Append the row to the table body
+          $(tblRow).appendTo("#userdata tbody");
+        });
+      });
+    });
+  </script>
+</body>
+</html>

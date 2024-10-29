@@ -8,15 +8,15 @@ import { NETWORK } from '../constants/network.js';
 const network = NETWORK.bch;
 
 // General collection metadata.
-const collectionName = "Shinobi"; // Name of your collection.
-const collectionDescription = "Elite digital ninjas, guardians of BCH."; // Description of your collection.
-const namePrefix = "Shinobi"; // Prefix for the NFT name.
-const description = "Elite digital ninja, guardian of BCH."; // NFT description.
-const baseUri = process.env.SHINOBI_BASE_URI || "ipfs://NewUriToReplace/images";
-const baseIconUri = process.env.SHINOBI_BASE_ICON_URI || "ipfs://NewUriToReplace/icons";
+const collectionName = "light"; // Name of your collection.
+const collectionDescription = "light"; // Description of your collection.
+const namePrefix = "PoP"; // Prefix for the NFT name.
+const description = "prove the proof is yours"; // NFT description.
+const baseUri = process.env.PoP_BASE_URI || "ipfs://NewUriToReplace/images";
+const baseIconUri = process.env.PoP_BASE_ICON_URI || "ipfs://NewUriToReplace/icons";
 
 // Background for your collection. This is used for OpenAI integration.
-const collectionBackground = `The Shinobi are elite digital ninjas, guardians of the BCH Blockchain and its Cashtokens. Entrusted by the mysterious Satoshi, they blend cryptographic arts with ancient martial traditions, ensuring the integrity and balance of the decentralized world.`;
+const collectionBackground = `none so far`;
 
 // BCMR specific metadata.
 const bcmrMetadata = {
@@ -44,7 +44,7 @@ const bcmrMetadata = {
 // https://bitcash.dev/guide/cashtokens.html
 const bchMetadata = {
   category: "YOUR_GENESIS_UNSPENT_TX",
-  symbol: "SHINOBI",
+  symbol: "PoP",
   uris: {
     icon: "",
     image: "",
@@ -58,49 +58,124 @@ const bchMetadata = {
 };
 
 const solanaMetadata = {
-  symbol: "SHO",
+  symbol: "PoP",
   seller_fee_basis_points: 1000, // Define how much % you want from secondary market sales 1000 = 10%
-  external_url: "https://www.youtube.com/@CashNinjasBCH",
+  external_url: "",
   creators: [
     {
-      address: "7fXNuer5sbZtaTEPhtJ5g5gNtuyRoKkvxdjEjEnPN4mC",
+      address: "",
       share: 100,
     },
   ],
 };
-
 // Simple configuration.
+const layerConfigurations = [
+  {
+    growEditionSizeTo: 5,
+    layersOrder: [
+      {
+        name: "Background",options: {bypassDNA: true}},
+      { name: "pers"},
+    ],
+  },
+  // {
+  //   growEditionSizeTo: 2,
+  //   layersOrder: [
+  //     {
+  //       name: "Background2",options: {bypassDNA: false,}},
+  //       { name: "pers"},
+    
+  //   ],
+  // },
+  // {
+  //   growEditionSizeTo: 3,
+  //   layersOrder: [
+  //     {
+  //       name: "Background3",options: {bypassDNA: false,}},
+  //       { name: "pers"},
+    
+  //   ],
+  // },
+  // {
+  //   growEditionSizeTo: 4,
+  //   layersOrder: [
+  //     {
+  //       name: "Background4",options: {bypassDNA: false,}},
+  //       { name: "pers"},
+    
+  //   ],
+  // },
+  // {
+  //   growEditionSizeTo: 5,
+  //   layersOrder: [
+  //     {
+  //       name: "Background5",options: {bypassDNA: false,}},
+  //       { name: "pers"},
+    
+  //   ],
+  // },  {
+  //   growEditionSizeTo: 6,
+  //   layersOrder: [
+  //     {
+  //       name: "Background",options: {bypassDNA: false}},
+  //     { name: "pers"},
+  //   ],
+  // },
+  // {
+  //   growEditionSizeTo: 7,
+  //   layersOrder: [
+  //     {
+  //       name: "Background2",options: {bypassDNA: false,}},
+  //       { name: "pers"},
+    
+  //   ],
+  // },
+  // {
+  //   growEditionSizeTo: 8,
+  //   layersOrder: [
+  //     {
+  //       name: "Background3",options: {bypassDNA: false,}},
+  //       { name: "pers"},
+    
+  //   ],
+  // },
+  // {
+  //   growEditionSizeTo: 9,
+  //   layersOrder: [
+  //     {
+  //       name: "Background4",options: {bypassDNA: false,}},
+  //       { name: "pers"},
+    
+  //   ],
+  // },
+  // {
+  //   growEditionSizeTo: 10,
+  //   layersOrder: [
+  //     {
+  //       name: "Background5",options: {bypassDNA: false,}},
+  //       { name: "pers"},
+    
+  //   ],
+  // },
+];
+// Advanced configuration.
 // const layerConfigurations = [
 //   {
 //     growEditionSizeTo: 5,
 //     layersOrder: [
-//       { name: "Background" },
+//       {
+//         name: "Background",
+//         options: {
+//           bypassDNA: false,
+//         },
+//       },
 //       { name: "Glow" },
-//       { name: "Weapons" },
+//       { name: "Weapons", options: { blend: MODE.overlay, opacity: 0.9 } },
 //       { name: "Body" },
 //       { name: "Eyes" },
 //     ],
 //   },
 // ];
-
-// Advanced configuration.
-const layerConfigurations = [
-  {
-    growEditionSizeTo: 11,
-    layersOrder: [
-      {
-        name: "Background",
-        options: {
-          bypassDNA: false,
-        },
-      },
-      { name: "Glow" },
-      { name: "Weapons", options: { blend: MODE.overlay, opacity: 0.9 } },
-      { name: "Body" },
-      { name: "Eyes" },
-    ],
-  },
-];
 
 const shuffleLayerConfigurations = false;
 
@@ -115,15 +190,16 @@ const format = {
 // Icon metadata is not supported for Solana.
 const iconFormat = {
   enabled: network != NETWORK.sol ? true : false,
-  width: 256,
-  height: 256,
+  width: 250,
+  height: 250,
 };
 
 const gif = {
-  export: false,
+  export: true,
   repeat: 0,
+  order: "ASC", // ASC, DESC, MIXED
   quality: 100,
-  delay: 500,
+  delay: 10000,
 };
 
 const text = {
@@ -150,25 +226,27 @@ const background = {
   default: "#000000",
 };
 
-const extraMetadata = {};
+const extraMetadata = {
+  creator: layerConfigurations.Heroe,
+};
 
 const rarityDelimiter = "#";
 
 const uniqueDnaTorrance = 10000;
 
 const preview = {
-  thumbPerRow: 5,
+  thumbPerRow: 1,
   thumbWidth: 50,
   imageRatio: format.height / format.width,
   imageName: "preview.png",
 };
 
 const preview_gif = {
-  numberOfImages: 5,
-  order: "MIXED", // ASC, DESC, MIXED
+  numberOfImages: 0,
+  order: "DESC", // ASC, DESC, MIXED
   repeat: 0,
   quality: 100,
-  delay: 500,
+  delay: 10000,
   imageName: "preview.gif",
 };
 
