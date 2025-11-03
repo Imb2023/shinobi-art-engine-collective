@@ -179,7 +179,7 @@ const layerConfigurations = [
 
 const shuffleLayerConfigurations = false;
 
-const debugLogs = false;
+const debugLogs = true;
 
 const format = {
   width: 512,
@@ -235,8 +235,8 @@ const rarityDelimiter = "#";
 const uniqueDnaTorrance = 10000;
 
 const preview = {
-  thumbPerRow: 1,
-  thumbWidth: 50,
+  thumbPerRow: 2,
+  thumbWidth: 500,
   imageRatio: format.height / format.width,
   imageName: "preview.png",
 };
@@ -245,8 +245,8 @@ const preview_gif = {
   numberOfImages: 0,
   order: "DESC", // ASC, DESC, MIXED
   repeat: 0,
-  quality: 100,
-  delay: 10000,
+  quality: 500,
+  delay: 1000,
   imageName: "preview.gif",
 };
 

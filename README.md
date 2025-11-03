@@ -146,32 +146,32 @@ Here is a list of the different blending modes that you can optionally use.
 
 ```js
 const MODE = {
-  sourceOver: "source-over",
-  sourceIn: "source-in",
-  sourceOut: "source-out",
-  sourceAtop: "source-out",
-  destinationOver: "destination-over",
-  destinationIn: "destination-in",
-  destinationOut: "destination-out",
-  destinationAtop: "destination-atop",
-  lighter: "lighter",
-  copy: "copy",
-  xor: "xor",
-  multiply: "multiply",
-  screen: "screen",
-  overlay: "overlay",
-  darken: "darken",
-  lighten: "lighten",
-  colorDodge: "color-dodge",
-  colorBurn: "color-burn",
-  hardLight: "hard-light",
-  softLight: "soft-light",
-  difference: "difference",
-  exclusion: "exclusion",
-  hue: "hue",
-  saturation: "saturation",
-  color: "color",
-  luminosity: "luminosity",
+  sourceOver: "source-over",        // Draws new content *over* existing pixels (default blend mode).
+  sourceIn: "source-in",            // Shows new content only where it overlaps existing pixels.
+  sourceOut: "source-out",          // Shows new content only where it does *not* overlap existing pixels.
+  sourceAtop: "source-atop",        // Draws new content only where it overlaps existing pixels; keeps existing below.
+  destinationOver: "destination-over", // Draws existing pixels *over* the new ones (reverse of source-over).
+  destinationIn: "destination-in",  // Keeps existing pixels only where they overlap the new content.
+  destinationOut: "destination-out",// Keeps existing pixels only where they do *not* overlap new content.
+  destinationAtop: "destination-atop", // Draws existing pixels only where they overlap new content; new below.
+  lighter: "lighter",               // Adds brightness from both layers (creates a lighter, glowing effect).
+  copy: "copy",                     // Only draws the new content, replacing everything underneath.
+  xor: "xor",                       // Keeps only non-overlapping parts of both layers (cuts out intersections).
+  multiply: "multiply",             // Multiplies color values, making the result darker (like stacking transparencies).
+  screen: "screen",                 // Inverse of multiply; lightens by blending colors to brighten the image.
+  overlay: "overlay",               // Mix of multiply and screen depending on brightness—adds contrast and punch.
+  darken: "darken",                 // Keeps the darker color from both layers.
+  lighten: "lighten",               // Keeps the lighter color from both layers.
+  colorDodge: "color-dodge",        // Brightens the base layer to reflect the blend color—strong highlights.
+  colorBurn: "color-burn",          // Darkens the base layer to reflect the blend color—deep shadows.
+  hardLight: "hard-light",          // Uses multiply or screen depending on the blend color—adds harsh contrast.
+  softLight: "soft-light",          // Gently lightens or darkens for a soft contrast look.
+  difference: "difference",         // Subtracts color values to create high-contrast, inverted effects.
+  exclusion: "exclusion",           // Similar to difference but with lower contrast (softer inverted look).
+  hue: "hue",                       // Keeps the base layer’s lightness/saturation, applies the blend’s hue.
+  saturation: "saturation",         // Keeps the base hue/lightness, applies the blend’s saturation.
+  color: "color",                   // Keeps the base layer’s lightness but applies blend hue/saturation (recolors image).
+  luminosity: "luminosity",         // Keeps the base hue/saturation but applies the blend’s brightness (lightness).
 };
 ```
 
@@ -225,7 +225,7 @@ The program will output all the images in the `build/images` directory along wit
 }
 ```
 
-The BCMR metadata will bein the `build/bcmr` directory for BCH collections! You can find more information about the BCMR format at [https://cashtokens.org/docs/bcmr/chip/](https://cashtokens.org/docs/bcmr/chip/)
+The BCMR metadata will be in the `build/bcmr` directory for BCH collections! You can find more information about the BCMR format at [https://cashtokens.org/docs/bcmr/chip/](https://cashtokens.org/docs/bcmr/chip/)
 
 You can also add extra metadata to each metadata file by adding your extra items, (key: value) pairs to the `extraMetadata` object variable in the `config.js` file.
 
