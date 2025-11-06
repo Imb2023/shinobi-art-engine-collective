@@ -19,26 +19,23 @@ import {
   gif,
   collectionName,
   collectionDescription,
-} from './config.js';
-import {
-  bigIntToVmNumber,
-  binToHex,
-} from '@bitauth/libauth';
-import { NETWORK } from '../constants/network.js';
+} from "./config.js";
+import { bigIntToVmNumber, binToHex } from "@bitauth/libauth";
+import { NETWORK } from "../constants/network.js";
 import fs from "fs";
-import sha1 from 'sha1/sha1.js';
-import { createCanvas, loadImage, Image } from 'canvas';
-import HashlipsGiffer from '../modules/HashlipsGiffer.js';
+import sha1 from "sha1/sha1.js";
+import { createCanvas, loadImage, Image } from "canvas";
+import HashlipsGiffer from "../modules/HashlipsGiffer.js";
 import { createHash } from "crypto";
 
 const basePath = process.cwd();
 const buildDir = `${basePath}/build`;
 const layersDir = `${basePath}/layers`;
 const canvas = createCanvas(format.width, format.height);
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d", { alpha: true }); //ALPHA TRUE CHANGED
 ctx.imageSmoothingEnabled = format.smoothing;
 const iconCanvas = createCanvas(iconFormat.width, iconFormat.height);
-const iconCtx = iconCanvas.getContext("2d");
+const iconCtx = iconCanvas.getContext("2d", { alpha: true }); //ALPHA TRUE CHANGED
 const DNA_DELIMITER = "\n";
 var metadataList = [];
 var attributesList = [];
@@ -86,7 +83,9 @@ const getElements = (path) => {
     .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item))
     .map((i, index) => {
       if (i.includes(DNA_DELIMITER)) {
-        throw new Error(`layer name can not contain ${DNA_DELIMITER}, please fix: ${i}`);
+        throw new Error(
+          `layer name can not contain ${DNA_DELIMITER}, please fix: ${i}`
+        );
       }
       return {
         id: index,
@@ -123,10 +122,10 @@ const layersSetup = (layersOrder) => {
 };
 
 const saveImage = (_editionCount) => {
-  fs.writeFileSync(
-    `${buildDir}/images/${_editionCount}.png`,
-    canvas.toBuffer("image/png")
-  );
+fs.writeFileSync(
+  `${buildDir}/images/${_editionCount}.png`,
+  canvas.toBuffer("image/png", { compressionLevel: 0 })
+);
 };
 
 const saveImageIcon = async (_editionCount) => {
@@ -137,13 +136,7 @@ const saveImageIcon = async (_editionCount) => {
   let img = new Image();
   img.src = canvas.toDataURL();
 
-  iconCtx.drawImage(
-    img,
-    0,
-    0,
-    iconFormat.width,
-    iconFormat.height,
-  );
+  iconCtx.drawImage(img, 0, 0, iconFormat.width, iconFormat.height);
 
   fs.writeFileSync(
     `${buildDir}/icons/${_editionCount}.png`,
@@ -158,8 +151,7 @@ const genColor = () => {
 };
 
 const drawBackground = () => {
-  ctx.fillStyle = background.static ? background.default : genColor();
-  ctx.fillRect(0, 0, format.width, format.height);
+  // Leave the background transparent
 };
 
 const imageHash256 = (imgPath) => {
@@ -183,8 +175,10 @@ const addMetadata = (_dna, _edition) => {
     attributes: attributesList,
   };
   if (iconFormat.enabled) {
-    tempMetadata['icon'] = `${baseIconUri}/${_edition}.png`;
-    tempMetadata['iconHash'] = imageHash256(`${buildDir}/icons/${_edition}.png`);
+    tempMetadata["icon"] = `${baseIconUri}/${_edition}.png`;
+    tempMetadata["iconHash"] = imageHash256(
+      `${buildDir}/icons/${_edition}.png`
+    );
   }
   if (network == NETWORK.sol) {
     tempMetadata = {
@@ -201,7 +195,7 @@ const addMetadata = (_dna, _edition) => {
             uri: `${_edition}.png`,
             type: "image/png",
           },
-        ]
+        ],
       },
     };
   }
@@ -241,19 +235,19 @@ const drawElement = (_renderObject, _index, _layersLen) => {
   ctx.globalCompositeOperation = _renderObject.layer.blend;
   text.only
     ? addText(
-      `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,
-      text.xGap,
-      text.yGap * (_index + 1),
-      text.size
-    )
+        `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,
+        text.xGap,
+        text.yGap * (_index + 1),
+        text.size
+      )
     : ctx.drawImage(
-      _renderObject.loadedImage,
-      0,
-      0,
-      format.width,
-      format.height
-    );
-
+        _renderObject.loadedImage,
+        0,
+        0,
+        format.width,
+        format.height
+      );
+  ctx.globalCompositeOperation = "source-over";
   addAttributes(_renderObject);
 };
 
@@ -331,7 +325,8 @@ const createDna = (_layers) => {
       random -= layer.elements[i].weight;
       if (random < 0) {
         return randNum.push(
-          `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
+          `${layer.elements[i].id}:${layer.elements[i].filename}${
+            layer.bypassDNA ? "?bypassDNA=true" : ""
           }`
         );
       }
@@ -350,7 +345,9 @@ const writeMetaData = (_data) => {
 };
 
 const writeBCMR = () => {
-  let data = JSON.parse(fs.readFileSync(`${basePath}/build/json/_metadata.json`));
+  let data = JSON.parse(
+    fs.readFileSync(`${basePath}/build/json/_metadata.json`)
+  );
   let bcmr = bcmrMetadata;
   let date = new Date().toISOString();
 
@@ -363,14 +360,14 @@ const writeBCMR = () => {
       attributes[oldFormat.trait_type] = oldFormat.value;
     });
     nfts[binToHex(bigIntToVmNumber(BigInt(i)))] = {
-      "name": o.name,
-      "description": o.description,
-      "uris": {
-        "icon": o.icon,
-        "image": o.image,
+      name: o.name,
+      description: o.description,
+      uris: {
+        icon: o.icon,
+        image: o.image,
       },
-      "extensions": {
-        "attributes": attributes,
+      extensions: {
+        attributes: attributes,
         "image-hash": o.imageHash,
         "icon-hash": o.iconHash,
         ...extraMetadata,
@@ -385,11 +382,14 @@ const writeBCMR = () => {
     token: {
       category: bchMetadata.category,
       symbol: bchMetadata.symbol,
-      nfts: { parse: { types: nfts } }
-    }
+      nfts: { parse: { types: nfts } },
+    },
   };
 
-  fs.writeFileSync(`${buildDir}/bcmr/bitcoin-cash-metadata-registry.json`, JSON.stringify(bcmr, null, 2));
+  fs.writeFileSync(
+    `${buildDir}/bcmr/bitcoin-cash-metadata-registry.json`,
+    JSON.stringify(bcmr, null, 2)
+  );
 
   return;
 };
@@ -398,8 +398,8 @@ const saveMetaDataSingleFile = (_editionCount) => {
   let metadata = metadataList.find((meta) => meta.edition == _editionCount);
   debugLogs
     ? console.log(
-      `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`
-    )
+        `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`
+      )
     : null;
   fs.writeFileSync(
     `${buildDir}/json/${_editionCount}.json`,
@@ -427,7 +427,8 @@ const startCreating = async () => {
   let failedCount = 0;
   let abstractedIndexes = [];
   let loopStart = 1;
-  let loopLength = layerConfigurations[layerConfigurations.length - 1].growEditionSizeTo;
+  let loopLength =
+    layerConfigurations[layerConfigurations.length - 1].growEditionSizeTo;
 
   if (network == NETWORK.sol) {
     loopStart = 0;
@@ -473,9 +474,9 @@ const startCreating = async () => {
             );
             hashlipsGiffer.start();
           }
-          if (background.generate) {
-            drawBackground();
-          }
+          // if (background.generate) {
+          //   drawBackground();
+          // }
           renderObjectArray.forEach((renderObject, index) => {
             drawElement(
               renderObject,

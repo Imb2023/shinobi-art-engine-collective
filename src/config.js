@@ -73,65 +73,28 @@ const solanaMetadata = {
 // Simple configuration.
 const layerConfigurations = [
   {
-    growEditionSizeTo: 2,
+    growEditionSizeTo: 1,
     layersOrder: [
       {
         name: "Background",
-        options: { bypassDNA: false },
       },
       {
         name: "layer1",
-        options: { blend: MODE.destinationIn, opacity: 0.1 },
-      },
-      { name: "layer2",
-        options: { blend: MODE.colorDodge, } 
-      },
-    ],
-  },
-    {
-    growEditionSizeTo: 4,
-    layersOrder: [
-      {
-        name: "Background",
-        options: { bypassDNA: false },
-      },
-      {
-        name: "layer3",
-        options: { blend: MODE.destinationIn, opacity: 0.1 },
-      },
-      { name: "layer4",
-        options: { blend: MODE.colorDodge, } 
       },
     ],
   },
 ];
-// Advanced configuration.
-// const layerConfigurations = [
-//   {
-//     growEditionSizeTo: 5,
-//     layersOrder: [
-//       {
-//         name: "Background",
-//         options: {
-//           bypassDNA: false,
-//         },
-//       },
-//       { name: "Glow" },
-//       { name: "Weapons", options: { blend: MODE.overlay, opacity: 0.9 } },
-//       { name: "Body" },
-//       { name: "Eyes" },
-//     ],
-//   },
-// ];
 
-const shuffleLayerConfigurations = true;
 
-const debugLogs = true;
+
+const shuffleLayerConfigurations = false;
+
+const debugLogs = false;
 
 const format = {
-  width: 512,
-  height: 512,
-  smoothing: true,
+  width: 1024,
+  height: 1024,
+  smoothing: false,
 };
 
 // Icon metadata is not supported for Solana.
@@ -150,9 +113,9 @@ const gif = {
 };
 
 const text = {
-  only: false,
+  only: true,
   color: "#ffffff",
-  size: 20,
+  size: 50,
   xGap: 40,
   yGap: 40,
   align: "left",
@@ -163,37 +126,33 @@ const text = {
 };
 
 const pixelFormat = {
-  ratio: 16 / 128,
+  ratio: 2 / 128,
 };
 
 const background = {
-  generate: true,
-  brightness: "80%",
-  static: false,
-  default: "#000000",
+  generate: false,  // ← disables solid background fill
+  default: "transparent",
 };
 
-const extraMetadata = {
-  creator: layerConfigurations.Heroe,
-};
+const extraMetadata = {};
 
 const rarityDelimiter = "#";
 
 const uniqueDnaTorrance = 10000;
 
 const preview = {
-  thumbPerRow: 2,
-  thumbWidth: 500,
+  thumbPerRow: 5,
+  thumbWidth: 50,
   imageRatio: format.height / format.width,
   imageName: "preview.png",
 };
 
 const preview_gif = {
-  numberOfImages: 0,
-  order: "MIXED", // ASC, DESC, MIXED
+  numberOfImages: 5,
+  order: "ASC", // ASC, DESC, MIXED
   repeat: 0,
-  quality: 500,
-  delay: 1000,
+  quality: 100,
+  delay: 500,
   imageName: "preview.gif",
 };
 
