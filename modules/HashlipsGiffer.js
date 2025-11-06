@@ -1,5 +1,4 @@
 import GifEncoder from "gif-encoder-2";
-
 import { writeFile } from "fs";
 
 export default class HashLipsGiffer {
@@ -18,6 +17,11 @@ export default class HashLipsGiffer {
     this.gifEncoder.setQuality(this.quality);
     this.gifEncoder.setRepeat(this.repeat);
     this.gifEncoder.setDelay(this.delay);
+
+    // ✅ Add transparency support (important!)
+    // 0x00ff00 = bright green (choose a color not used in your art)
+    this.gifEncoder.setTransparent(0x00ff00);
+    this.gifEncoder.setDispose(2); // clear frame before drawing the next
   };
 
   start = () => {
@@ -25,13 +29,17 @@ export default class HashLipsGiffer {
   };
 
   add = () => {
+    // 🟢 Before capturing a frame, ensure the canvas has a transparent base
+    this.ctx.globalCompositeOperation = "source-over";
     this.gifEncoder.addFrame(this.ctx);
   };
 
   stop = () => {
     this.gifEncoder.finish();
     const buffer = this.gifEncoder.out.getData();
-    writeFile(this.fileName, buffer, (error) => { });
-    console.log(`Created gif at ${this.fileName}`);
+    writeFile(this.fileName, buffer, (error) => {
+      if (error) console.error("GIF write error:", error);
+    });
+    console.log(`✅ Created transparent GIF at ${this.fileName}`);
   };
 }

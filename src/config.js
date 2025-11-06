@@ -130,8 +130,9 @@ const pixelFormat = {
 };
 
 const background = {
-  generate: false,  // ← disables solid background fill
+  generate: false,
   default: "transparent",
+  static: false,
 };
 
 const extraMetadata = {};

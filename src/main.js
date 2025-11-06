@@ -474,9 +474,9 @@ const startCreating = async () => {
             );
             hashlipsGiffer.start();
           }
-          // if (background.generate) {
-          //   drawBackground();
-          // }
+if (background.generate && background.default !== "transparent") {
+  drawBackground();
+}
           renderObjectArray.forEach((renderObject, index) => {
             drawElement(
               renderObject,
